@@ -1,45 +1,45 @@
-#include <bits/stdc++.h>
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
 using namespace std;
 
-string ltrim(const string &);
-string rtrim(const string &);
 
-
-
-int main()
-{
-    string n_temp;
-    getline(cin, n_temp);
-
-    int n = stoi(ltrim(rtrim(n_temp)));
-
-	for( int i=1;i<11;i++)
+int main() {
+	/* Enter your code here. Read input from STDIN. Print output to STDOUT */   
+	int N;
+	cin >> N;
+	string tmp;
+	getline(cin,tmp);
+	string input[N];
+	string odd[N];
+	string even[N];
+	for (int i=0; i<N;i++)
 	{
-		cout << n <<" x " << i <<" = " << n*i <<endl;
+		getline(cin,input[i]);
+		for(int j=0; j<input[i].length();j++)
+		{	
+			odd[i]= odd[i]+ input[i][j];
+			j++;
+			if(j>=input[i].length())
+                            break;
+			even[i] =even[i]+ input[i][j];
+
+
+
+		}
+
 	}
 
+	for(int i=0; i<N;i++)
+		cout << odd[i] << " " << even[i]<<endl;
 
-    return 0;
+
+
+
+
+
+	return 0;
 }
 
-string ltrim(const string &str) {
-    string s(str);
-
-    s.erase(
-        s.begin(),
-        find_if(s.begin(), s.end(), not1(ptr_fun<int, int>(isspace)))
-    );
-
-    return s;
-}
-
-string rtrim(const string &str) {
-    string s(str);
-
-    s.erase(
-        find_if(s.rbegin(), s.rend(), not1(ptr_fun<int, int>(isspace))).base(),
-        s.end()
-    );
-
-    return s;
-}
