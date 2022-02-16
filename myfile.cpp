@@ -1,6 +1,4 @@
-3
-
-#include <bits/stdc++.h1
+#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -29,7 +27,9 @@ int main()
 
         arr[i] = arr_item;
     }
- cout << "kimbc"<< endl;
+    for(int i=arr.size();i>0;i--)
+	    cout << arr.at(i-1)<<" ";
+    cout << endl;
     return 0;
 }
 
