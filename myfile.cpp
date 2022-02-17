@@ -1,74 +1,55 @@
-#include <bits/stdc++.h>
-
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <map>
 using namespace std;
 
 string ltrim(const string &);
-string rtrim(const string &);
-vector<string> split(const string &);
 
+int main() {
+	/* Enter your code here. Read input from STDIN. Print output to STDOUT */   
+	int n;
+	string tmp_input;
+	getline(cin,tmp_input);
+	n = stoi(tmp_input);
+	map <string,string> phonebook;
+	vector<string> quary(n);
+	string tmp_name, tmp_phonenumber;
+	for(int i=0;i<n;i++){
+		cin>>tmp_name;
+		getline(cin,tmp_phonenumber);
+		tmp_phonenumber = ltrim(tmp_phonenumber);
+//		cin>>tmp_phonenumber;
+		if(tmp_phonenumber.length() !=0)
+			phonebook[tmp_name]=tmp_phonenumber;
+	}
+//	getline(cin,tmp_name);
+	int qu_num=0;
+	for(;qu_num<n;qu_num++){
+		getline(cin,quary[qu_num]);
+		if(quary[qu_num].length()==0) break;
+	}	
+	for(int i=0;i<qu_num;i++){
+		if(phonebook.count(quary[i]))
+				cout << quary[i]<<"="<<phonebook[quary[i]]<<endl;
+		else 
+			cout<<"Not found"<<endl;
+	}
 
-
-int main()
-{
-    string n_temp;
-    getline(cin, n_temp);
-
-    int n = stoi(ltrim(rtrim(n_temp)));
-
-    string arr_temp_temp;
-    getline(cin, arr_temp_temp);
-
-    vector<string> arr_temp = split(rtrim(arr_temp_temp));
-
-    vector<int> arr(n);
-
-    for (int i = 0; i < n; i++) {
-        int arr_item = stoi(arr_temp[i]);
-
-        arr[i] = arr_item;
-    }
-    for(int i=arr.size();i>0;i--)
-	    cout << arr.at(i-1)<<" ";
-    cout << endl;
-    return 0;
+	return 0;
 }
 
-string ltrim(const string &str) {
-    string s(str);
 
-    s.erase(
-        s.begin(),
-        find_if(s.begin(), s.end(), not1(ptr_fun<int, int>(isspace)))
-    );
+   string ltrim(const string &str) {
+	       string s(str);
 
-    return s;
-}
+	           s.erase(
+		   s.begin(),
+		   find_if(s.begin(), s.end(), not1(ptr_fun<int, int>(isspace)))
+	       );
 
-string rtrim(const string &str) {
-    string s(str);
-
-    s.erase(
-        find_if(s.rbegin(), s.rend(), not1(ptr_fun<int, int>(isspace))).base(),
-        s.end()
-    );
-
-    return s;
-}
-
-vector<string> split(const string &str) {
-    vector<string> tokens;
-
-    string::size_type start = 0;
-    string::size_type end = 0;
-
-    while ((end = str.find(" ", start)) != string::npos) {
-        tokens.push_back(str.substr(start, end - start));
-
-        start = end + 1;
-    }
-
-    tokens.push_back(str.substr(start));
-
-    return tokens;
-}
+		       return s;
+   }
 
