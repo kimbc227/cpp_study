@@ -4,41 +4,46 @@ using namespace std;
 
 string ltrim(const string &);
 string rtrim(const string &);
+vector<string> split(const string &);
 
 
 
 int main()
 {
-	string n_temp;
-	getline(cin, n_temp);
 
-	int n = stoi(ltrim(rtrim(n_temp)));
-	
+	vector<vector<int>> arr(6);
 
+	for (int i = 0; i < 6; i++) {
+		arr[i].resize(6);
 
-	cout << "n = " <<n<<endl;
+		string arr_row_temp_temp;
+		getline(cin, arr_row_temp_temp);
 
-	int max_num=0;
-	int tmp_num=0;
-	for(;n>0;)
-	{
-		cout << "n = " <<n<<endl;
+		vector<string> arr_row_temp = split(rtrim(arr_row_temp_temp));
 
-		if(n%2 == 1)
-		{
-			tmp_num++;
+		for (int j = 0; j < 6; j++) {
+			int arr_row_item = stoi(arr_row_temp[j]);
 
-			if(max_num <tmp_num)
-				max_num = tmp_num;
+			arr[i][j] = arr_row_item;
 		}
-		else //if(n%2 ==0)
-			tmp_num=0;		
-
-		n=n>>1;
 	}
 
+	int max_num=-45;
+	for (int i=0; i<4; i++)
+	for (int j=0; j<4;j++){
+		int a,b,c,d,e,f,g,tmp_num=0;
+		a = arr[i][j];
+		b = arr[i][j+1];
+		c = arr[i][j+2];
+		d = arr[i+1][j+1];
+		e = arr[i+2][j];
+		f =  arr[i+2][j+1];
+		g = arr[i+2][j+2];
+		tmp_num = a+b+c+d+e+f+g;
+		if (max_num < tmp_num)
+			max_num = tmp_num;
+	}
 	cout << max_num << endl;
-
 	return 0;
 }
 
@@ -64,3 +69,19 @@ string rtrim(const string &str) {
 	return s;
 }
 
+vector<string> split(const string &str) {
+	vector<string> tokens;
+
+	string::size_type start = 0;
+	string::size_type end = 0;
+
+	while ((end = str.find(" ", start)) != string::npos) {
+		tokens.push_back(str.substr(start, end - start));
+
+		start = end + 1;
+	}
+
+	tokens.push_back(str.substr(start));
+
+	return tokens;
+}
