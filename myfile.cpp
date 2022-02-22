@@ -5,36 +5,39 @@ using namespace std;
 string ltrim(const string &);
 string rtrim(const string &);
 
-/*
- *  * Complete the 'factorial' function below.
- *   *
- *    * The function is expected to return an INTEGER.
- *     * The function accepts INTEGER n as parameter.
- *      */
 
-int factorial(int n) {
-	if(n<=1) 
-		return 1;
-	else 
-		return n * factorial(n-1);
-}
 
 int main()
 {
-	cout <<"hi"<<endl;
-	cout << getenv("PATH")<<endl;
-
-	ofstream fout("./hi.txt");
 	string n_temp;
 	getline(cin, n_temp);
 
 	int n = stoi(ltrim(rtrim(n_temp)));
+	
 
-	int result = factorial(n);
 
-	fout << result << "\n";
+	cout << "n = " <<n<<endl;
 
-	fout.close();
+	int max_num=0;
+	int tmp_num=0;
+	for(;n>0;)
+	{
+		cout << "n = " <<n<<endl;
+
+		if(n%2 == 1)
+		{
+			tmp_num++;
+
+			if(max_num <tmp_num)
+				max_num = tmp_num;
+		}
+		else //if(n%2 ==0)
+			tmp_num=0;		
+
+		n=n>>1;
+	}
+
+	cout << max_num << endl;
 
 	return 0;
 }
