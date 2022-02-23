@@ -3,62 +3,60 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
-#include <string>
+
 using namespace std;
-class Book{
-	protected:
-		string title;
-		string author;
+
+class Difference {
+	private:
+		vector<int> elements;
+
 	public:
-		Book(string t,string a){
-			title=t;
-			author=a;
+		int maximumDifference;
+
+		// Add your code here
+	Difference(vector<int> a):elements(a), maximumDifference(0){}
+	void computeDifference()
+	{			
+		for(int i=0;i<elements.size()-1;i++)
+		{
+			int tmp_element = elements.at(i);
+
+			for(int j=i+1;j<elements.size();j++)
+			{	
+				int tmp_2nd_element = 0, tmp_difference=0;
+				tmp_2nd_element = elements.at(j);
+				tmp_difference = tmp_element - tmp_2nd_element;
+				if(tmp_difference<0)
+					tmp_difference=tmp_difference * -1;
+				if( tmp_difference> maximumDifference)
+					maximumDifference = tmp_difference;
+
+			}
 		}
-		virtual void display()=0;
 
-};
-
-// Write your MyBook class here
-class MyBook:public Book{
-	private :
-		int price;
-
-	public : 
-	MyBook(string t, string a, int p):Book(t,a), price(p){}
-	
-	void display(){
-		cout << "Title: "<< title<<endl;
-		cout << "Author: "<<author<<endl;
-		cout << "Price: "<<price<<endl;
 	}
 
-
-};
-//   Class Constructor
-//   
-//   Parameters:
-//   title - The book's title.
-//   author - The book's author.
-//   price - The book's price.
-//
-// Write your constructor here
-
-
-//   Function Name: display
-//   Print the title, author, and price in the specified format.
-//
-// Write your method here
-
-// End class
+	
+}; // End of Difference class
 
 int main() {
-	string title,author;
-	int price;
-	getline(cin,title);
-	getline(cin,author);
-	cin>>price;
-	MyBook novel(title,author,price);
-	novel.display();
+	int N;
+	cin >> N;
+
+	vector<int> a;
+
+	for (int i = 0; i < N; i++) {
+		int e;
+		cin >> e;
+
+		a.push_back(e);
+	}
+
+	Difference d(a);
+
+	d.computeDifference();
+
+	cout << d.maximumDifference;
+
 	return 0;
 }
-
