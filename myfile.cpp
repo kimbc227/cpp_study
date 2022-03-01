@@ -1,22 +1,51 @@
-#include <bits/stdc++.h>
-
+#include <cmath>
+#include <iostream>
+#include <exception>
+#include <stdexcept>
 using namespace std;
 
+//Write your code here
+
+
+class myexception: public exception
+{
+	virtual const char* what() const throw()
+	{
+		return "n and p should be non-negative";
+	}
+} ;
+
+class Calculator{
+
+	public :
+	Calculator(){}
+	int power(int n, int p)
+	{
+		myexception my;	
+		if(n<0 || p<0)
+			throw my;
+		return pow(n,p);
+	}
+
+
+};
 
 
 int main()
 {
-	string S;
-	getline(cin, S);
+	Calculator myCalculator=Calculator();
+	int T,n,p;
+	cin>>T;
+	while(T-->0){
+		if(scanf("%d %d",&n,&p)==2){
+			try{
+				int ans=myCalculator.power(n,p);
+				cout<<ans<<endl; 
+			}
+			catch(exception& e){
+				cout<<e.what()<<endl;
+			}
+		}
+	}
 
-	int result =0;
-	try{
-		result = stoi(S);
-		cout << result <<endl;
-	}
-	catch(exception& error){
-		cout<<"Bad String"<<endl;
-	}
-	return 0;
 }
-
