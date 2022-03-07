@@ -1,37 +1,57 @@
-#include <cmath>
-#include <cstdio>
-#include <vector>
 #include <iostream>
-#include <algorithm>
-#include <string>
-using namespace std;
-class AdvancedArithmetic{
-	public:
-		virtual int divisorSum(int n)=0;
-};
-class Calculator : public AdvancedArithmetic {
-	public:
-		int divisorSum(int n) {
-			int sum=0;
-			vector <int> myArray;
-			for(int i=1;i<=n; i++)
-			{
-				if(n%i == 0) 
-					myArray.push_back(i);
-				
-			}
-			for(vector<int>::iterator i=myArray.begin(); i!=myArray.end() ; i++)
-				sum+= *i;
-	
-			return sum;
-		}
-};
 
-int main(){
-	int n;
-	cin >> n;
-	AdvancedArithmetic *myCalculator = new Calculator(); 
-	int sum = myCalculator->divisorSum(n);
-	cout << "I implemented: AdvancedArithmetic\n" << sum;
-	return 0;
+
+using namespace std;
+
+
+
+
+
+int* func1(){
+
+	int array2[3] = {1,2,3};
+	
+	return array2;
 }
+
+
+void func2(int * a){
+//	a = new int[3];
+
+
+	a[0] =4;
+	a[1] =3;
+	a[2] =5;
+	//a = a+3;
+	a++;a++;a++;
+	a = new int[2];
+
+	a[0]=4;
+	a[1] = 0;
+
+
+	
+
+}
+
+int main()
+{
+	int array1[]= {2,3,4};
+	
+//	int *array1;
+
+
+	func2(array1);
+
+	cout << array1[0] << array1[1] << array1[2]<<array1[3]<<array1[4] << endl;
+
+
+	
+
+}
+
+
+
+
+
+
