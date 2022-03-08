@@ -1,62 +1,65 @@
-#include <cmath>
-#include <cstdio>
-#include <vector>
 #include <iostream>
-#include <algorithm>
+
 
 using namespace std;
 
-class Difference {
-	private:
-		vector<int> elements;
 
-	public:
-		int maximumDifference;
 
-		// Add your code here
-	Difference(vector<int> a):elements(a), maximumDifference(0){}
-	void computeDifference()
-	{			
-		for(int i=0;i<elements.size()-1;i++)
-		{
-			int tmp_element = elements.at(i);
 
-			for(int j=i+1;j<elements.size();j++)
-			{	
-				int tmp_2nd_element = 0, tmp_difference=0;
-				tmp_2nd_element = elements.at(j);
-				tmp_difference = tmp_element - tmp_2nd_element;
-				if(tmp_difference<0)
-					tmp_difference=tmp_difference * -1;
-				if( tmp_difference> maximumDifference)
-					maximumDifference = tmp_difference;
 
-			}
-		}
+class B{
 
-	}
+public :
+        int a =10;
+        B(int tmp):a(tmp){}
 
-	
-}; // End of Difference class
 
-int main() {
-	int N;
-	cin >> N;
+};
 
-	vector<int> a;
 
-	for (int i = 0; i < N; i++) {
-		int e;
-		cin >> e;
 
-		a.push_back(e);
-	}
+class C{
+private :
 
-	Difference d(a);
+public :
 
-	d.computeDifference();
+        B binc;
+        B * pbinc;
 
-	cout << d.maximumDifference;
 
-	return 0;
+
+        C(B yourb, B * pyourb):binc(yourb), pbinc(pyourb){}
+
+
+};
+
+
+
+int      main()
+{
+
+        B *myb = new B(4);
+        cout << myb->a<<endl;
+        C myc(*myb, myb);
+
+        myb->a = 5;
+
+        cout << myb->a  << endl;
+        cout << myc.binc.a << "    " << myc.pbinc->a<<endl;
+
+
+
+        B myb_(10);
+        cout << myb_.a<<endl;
+        C myc_(myb_, &myb_);
+
+        myb_.a = 15;
+        cout << myb_.a << endl;
+        cout << myc_.binc.a << "    " << myc_.pbinc->a<<endl;
+
+
+
+
+        return 0;
+
 }
