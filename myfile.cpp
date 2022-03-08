@@ -31,6 +31,13 @@ public :
         C(B yourb, B * pyourb):binc(yourb), pbinc(pyourb){}
 
 
+	void mytest(B & tmp_b)
+	{
+
+		tmp_b.a = 9;
+	}
+
+
 };
 
 
@@ -58,7 +65,10 @@ int      main()
         cout << myc_.binc.a << "    " << myc_.pbinc->a<<endl;
 
 
+	B qq(100);
 
+	myc_.mytest(qq);
+	cout << qq.a << endl;
 
         return 0;
 
