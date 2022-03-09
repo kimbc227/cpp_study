@@ -1,76 +1,96 @@
-#include <iostream>
-#include <cstddef>
+#include <bits/stdc++.h>
 
-using namespace std;	
+using namespace std;
 
-class Node{
-	public:
-		int data;
-		Node *left;
-		Node *right;
-		Node(int d){
-			data = d;
-			left = NULL;
-			right = NULL;
-		}
-};
-class Solution{
-	public:
-		Node* insert(Node* root, int data) {
-			if(root == NULL) {
-				return new Node(data);
-			}
-			else {
-				Node* cur;
-				if(data <= root->data){
-					cur = insert(root->left, data);
-					root->left = cur;
-				}
-				else{
-					cur = insert(root->right, data);
-					root->right = cur;
-				}
+string ltrim(const string &);
+string rtrim(const string &);
+vector<string> split(const string &);
 
-				return root;
-			}
-		}
 
-		int getHeight(Node* root){
-			//Write your code here
-			int left_length=0, right_length=0;
-			if(root->left ==NULL && root->right==NULL)
-				return 0;
-			if(root-> right != NULL)
-			{
-			//	Solution left_recursive;
-				right_length = this->getHeight(root->right)+1;
-				
-			}			
-			if(root->left != NULL)
-				left_length = this->getHeight(root->left)+1;
-			return (right_length>left_length)?right_length:left_length;	
-		}
 
-}; //End of Solution
+int main()
+{
+	string n_temp;
+	getline(cin, n_temp);
 
-int main() {
-	Solution myTree;
-	Node* root = NULL;
-	int t;
-	int data;
+	int n = stoi(ltrim(rtrim(n_temp)));
 
-	cin >> t;
+	string a_temp_temp;
+	getline(cin, a_temp_temp);
 
-	while(t-- > 0){
-		cin >> data;
-		root = myTree.insert(root, data);
+	vector<string> a_temp = split(rtrim(a_temp_temp));
+
+	vector<int> a(n);
+
+	for (int i = 0; i < n; i++) {
+		int a_item = stoi(a_temp[i]);
+
+		a[i] = a_item;
 	}
-	int height = myTree.getHeight(root);
-	cout << height;
 
+	// Write your code here
+	
+	int total_swap =0;
+	for (int i = 0; i < n; i++) {
+		// Track number of elements swapped during a single array traversal
+		int numberOfSwaps = 0;
+
+		for (int j = 0; j < n - 1; j++) {
+			// Swap adjacent elements if they are in decreasing order
+			if (a[j] > a[j + 1]) {
+				swap(a[j], a[j + 1]);
+				numberOfSwaps++;
+			}
+		}
+		total_swap += numberOfSwaps;
+		// If no elements were swapped during a traversal, array is sorted
+		if (numberOfSwaps == 0) {
+			break;
+		}
+	}
+
+	cout << "Array is sorted in "<< total_swap<<" swaps." << endl;
+	cout << "First Element: " <<a[0]  <<endl << "Last Element: "<<a[n-1] <<endl;
 	return 0;
+
+
 }
 
+string ltrim(const string &str) {
+	string s(str);
 
+	s.erase(
+			s.begin(),
+			find_if(s.begin(), s.end(), not1(ptr_fun<int, int>(isspace)))
+	       );
 
+	return s;
+}
 
+string rtrim(const string &str) {
+	string s(str);
+
+	s.erase(
+			find_if(s.rbegin(), s.rend(), not1(ptr_fun<int, int>(isspace))).base(),
+			s.end()
+	       );
+
+	return s;
+}
+
+vector<string> split(const string &str) {
+	vector<string> tokens;
+
+	string::size_type start = 0;
+	string::size_type end = 0;
+
+	while ((end = str.find(" ", start)) != string::npos) {
+		tokens.push_back(str.substr(start, end - start));
+
+		start = end + 1;
+	}
+
+	tokens.push_back(str.substr(start));
+
+	return tokens;
+}
