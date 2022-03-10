@@ -1,51 +1,70 @@
 #include <iostream>
-#include <vector>
+#include <cstddef>
+#include <queue>
 #include <string>
+#include <cstdlib>
 
-using namespace std;
+using namespace std;	
+class Node{
+	public:
+		int data;
+		Node *left,*right;
+		Node(int d){
+			data=d;
+			left=right=NULL;
+		}
+};
+class Solution{
+	public:
+		Node* insert(Node* root, int data){
+			if(root==NULL){
+				return new Node(data);
+			}
+			else{
+				Node* cur;
+				if(data<=root->data){
+					cur=insert(root->left,data);
+					root->left=cur;
+				}
+				else{
+					cur=insert(root->right,data);
+					root->right=cur;
+				}           
+				return root;
+			}
+		}
 
-/**
- *    Name: printArray
- *    Print each element of the generic vector on a new line. Do not return anything.
- *    @param A generic vector
- **/
+		void levelOrder(Node * root){
+			//Write your code here<F2>
+			queue<Node *> my_queue;
+			my_queue.push(root);
+			while(!my_queue.empty()){	
+				Node * cur = my_queue.front();
+				my_queue.pop();
+				if(cur->left != NULL)
+				{
+					my_queue.push(cur->left);
+				}
+				if(cur->right != NULL)
+				{
+					my_queue.push(cur->right);
+				}
+				cout << cur-> data << " ";
+			}
+			cout << endl;
 
-// Write your code here
+		}
 
-
-template <typename T>
-void printArray(vector<T> p_vec)
-{
-	for(int i =0; i<p_vec.size() ; i++)
-	{
-
-		cout << p_vec.at(i)<<endl;
+};//End of Solution
+int main(){
+	Solution myTree;
+	Node* root=NULL;
+	int T,data;
+	cin>>T;
+	while(T-->0){
+		cin>>data;
+		root= myTree.insert(root,data);
 	}
-}
-
-
-
-int main() {
-	int n;
-
-	cin >> n;
-	vector<int> int_vector(n);
-	for (int i = 0; i < n; i++) {
-		int value;
-		cin >> value;
-		int_vector[i] = value;
-	}
-
-	cin >> n;
-	vector<string> string_vector(n);
-	for (int i = 0; i < n; i++) {
-		string value;
-		cin >> value;
-		string_vector[i] = value;
-	}
-
-	printArray<int>(int_vector);
-	printArray<string>(string_vector);
-
+	myTree.levelOrder(root);
 	return 0;
 }
