@@ -1,96 +1,51 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <string>
 
 using namespace std;
 
-string ltrim(const string &);
-string rtrim(const string &);
-vector<string> split(const string &);
+/**
+ *    Name: printArray
+ *    Print each element of the generic vector on a new line. Do not return anything.
+ *    @param A generic vector
+ **/
+
+// Write your code here
 
 
-
-int main()
+template <typename T>
+void printArray(vector<T> p_vec)
 {
-	string n_temp;
-	getline(cin, n_temp);
+	for(int i =0; i<p_vec.size() ; i++)
+	{
 
-	int n = stoi(ltrim(rtrim(n_temp)));
+		cout << p_vec.at(i)<<endl;
+	}
+}
 
-	string a_temp_temp;
-	getline(cin, a_temp_temp);
 
-	vector<string> a_temp = split(rtrim(a_temp_temp));
 
-	vector<int> a(n);
+int main() {
+	int n;
 
+	cin >> n;
+	vector<int> int_vector(n);
 	for (int i = 0; i < n; i++) {
-		int a_item = stoi(a_temp[i]);
-
-		a[i] = a_item;
+		int value;
+		cin >> value;
+		int_vector[i] = value;
 	}
 
-	// Write your code here
-	
-	int total_swap =0;
+	cin >> n;
+	vector<string> string_vector(n);
 	for (int i = 0; i < n; i++) {
-		// Track number of elements swapped during a single array traversal
-		int numberOfSwaps = 0;
-
-		for (int j = 0; j < n - 1; j++) {
-			// Swap adjacent elements if they are in decreasing order
-			if (a[j] > a[j + 1]) {
-				swap(a[j], a[j + 1]);
-				numberOfSwaps++;
-			}
-		}
-		total_swap += numberOfSwaps;
-		// If no elements were swapped during a traversal, array is sorted
-		if (numberOfSwaps == 0) {
-			break;
-		}
+		string value;
+		cin >> value;
+		string_vector[i] = value;
 	}
 
-	cout << "Array is sorted in "<< total_swap<<" swaps." << endl;
-	cout << "First Element: " <<a[0]  <<endl << "Last Element: "<<a[n-1] <<endl;
+	printArray<int>(int_vector);
+	printArray<string>(string_vector);
+
 	return 0;
-
-
-}
-
-string ltrim(const string &str) {
-	string s(str);
-
-	s.erase(
-			s.begin(),
-			find_if(s.begin(), s.end(), not1(ptr_fun<int, int>(isspace)))
-	       );
-
-	return s;
-}
-
-string rtrim(const string &str) {
-	string s(str);
-
-	s.erase(
-			find_if(s.rbegin(), s.rend(), not1(ptr_fun<int, int>(isspace))).base(),
-			s.end()
-	       );
-
-	return s;
-}
-
-vector<string> split(const string &str) {
-	vector<string> tokens;
-
-	string::size_type start = 0;
-	string::size_type end = 0;
-
-	while ((end = str.find(" ", start)) != string::npos) {
-		tokens.push_back(str.substr(start, end - start));
-
-		start = end + 1;
-	}
-
-	tokens.push_back(str.substr(start));
-
-	return tokens;
 }
