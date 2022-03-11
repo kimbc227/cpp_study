@@ -1,70 +1,96 @@
-#include <iostream>
 #include <cstddef>
-#include <queue>
-#include <string>
-#include <cstdlib>
-
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
 using namespace std;	
-class Node{
+class Node
+{
 	public:
 		int data;
-		Node *left,*right;
+		Node *next;
 		Node(int d){
 			data=d;
-			left=right=NULL;
+			next=NULL;
 		}
 };
 class Solution{
 	public:
-		Node* insert(Node* root, int data){
-			if(root==NULL){
-				return new Node(data);
+
+		Node* removeDuplicates(Node *head)
+		{
+			//Write your code here
+			Node * cur=head;
+			do{
+
+
+
+				for(Node * compare=cur;compare->next !=NULL;)
+				{	
+					Node * prev= compare;	
+					compare = compare->next;
+					if(cur->data == compare->data)
+					{
+						prev->next = compare->next;
+						compare = prev;	
+					}
+
+				}
+								
+				cur = cur->next;
+			}while(cur !=NULL);
+
+
+			return head;
+		}
+
+		Node* insert(Node *head,int data)
+		{
+			Node* p=new Node(data);
+			if(head==NULL){
+				head=p;  
+
+			}
+			else if(head->next==NULL){
+				head->next=p;
+
 			}
 			else{
-				Node* cur;
-				if(data<=root->data){
-					cur=insert(root->left,data);
-					root->left=cur;
+				Node *start=head;
+				while(start->next!=NULL){
+					start=start->next;
 				}
-				else{
-					cur=insert(root->right,data);
-					root->right=cur;
-				}           
-				return root;
-			}
-		}
+				start->next=p;   
 
-		void levelOrder(Node * root){
-			//Write your code here<F2>
-			queue<Node *> my_queue;
-			my_queue.push(root);
-			while(!my_queue.empty()){	
-				Node * cur = my_queue.front();
-				my_queue.pop();
-				if(cur->left != NULL)
-				{
-					my_queue.push(cur->left);
-				}
-				if(cur->right != NULL)
-				{
-					my_queue.push(cur->right);
-				}
-				cout << cur-> data << " ";
 			}
-			cout << endl;
+			return head;
+
 
 		}
+		void display(Node *head)
+		{
+			Node *start=head;
+			while(start)
+			{
+				cout<<start->data<<" ";
+				start=start->next;
+			}
+		}
+};
 
-};//End of Solution
-int main(){
-	Solution myTree;
-	Node* root=NULL;
+int main()
+{
+	Node* head=NULL;
+	Solution mylist;
 	int T,data;
 	cin>>T;
 	while(T-->0){
 		cin>>data;
-		root= myTree.insert(root,data);
-	}
-	myTree.levelOrder(root);
-	return 0;
+		head=mylist.insert(head,data);
+	}	
+	head=mylist.removeDuplicates(head);
+
+	mylist.display(head);
+
 }
