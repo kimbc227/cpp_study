@@ -1,45 +1,120 @@
-#include <cmath>
-#include <cstdio>
-#include <vector>
-#include <iostream>
 #include <algorithm>
+#include <iostream>
+#include <stdexcept>
+#include <vector>
+#include <cassert>
+#include <set>
+
 using namespace std;
 
+int minimum_index(vector<int> seq) {
+	if (seq.empty()) {
+		throw invalid_argument("Cannot get the minimum value index from an empty sequence");
+	}
+	int min_idx = 0;
+	for (int i = 1; i < seq.size(); ++i) {
+		if (seq[i] < seq[min_idx]) {
+			min_idx = i;
+
+		}
+	}
+	return min_idx;
+}
+
+
+
+
+class TestDataEmptyArray{
+	
+public : 
+	//static vector<int> my_array{};
+	static auto get_array(){
+
+		vector <int> my_array{};	
+
+		return my_array;
+	}
+
+
+
+};
+
+
+class TestDataUniqueValues{
+
+public : 
+	static auto get_expected_result(){
+		int result = 0;
+		return	 result;
+	}
+	static auto get_array(){
+		//int [] my_array = {1,2,3,4,5};
+		vector <int> my_array{1,2,3,4,5};	
+		return my_array;
+	}
+
+};
+
+
+class TestDataExactlyTwoDifferentMinimums{
+
+public :
+
+	static auto get_array(){
+		//int [] my_array = {1,2,3,4,5};
+		vector <int> my_array{1,2,3,1,5};	
+		return my_array;
+	}
+
+
+	static auto get_expected_result()
+	{
+		return 0;
+		
+	}
+
+};
+
+
+void TestWithEmptyArray() {
+	try {
+		auto seq = TestDataEmptyArray::get_array();
+		auto result = minimum_index(seq);
+	} catch (invalid_argument& e) {
+		cout<<"hi I am BC"<<endl;
+		return;
+	}
+	assert(false);
+}
+
+void TestWithUniqueValues() {
+	auto seq = TestDataUniqueValues::get_array();
+	assert(seq.size() >= 2);
+
+	assert(set<int>(seq.begin(), seq.end()).size() == seq.size());
+
+	auto expected_result = TestDataUniqueValues::get_expected_result();
+	auto result = minimum_index(seq);
+	assert(result == expected_result);
+}
+
+void TestWithExactlyTwoDifferentMinimums() {
+	auto seq = TestDataExactlyTwoDifferentMinimums::get_array();
+	assert(seq.size() >= 2);
+
+	auto tmp = seq;
+	sort(tmp.begin(), tmp.end());
+	assert(tmp[0] == tmp[1] and (tmp.size() == 2 or tmp[1] < tmp[2]));
+
+	auto expected_result = TestDataExactlyTwoDifferentMinimums::get_expected_result();
+	auto result = minimum_index(seq);
+	assert(result == expected_result);
+}
 
 int main() {
-	/* Enter your code here. Read input from STDIN. Print output to STDOUT */   
-		
-	int returned_day, returned_month, returned_year;
-	int expected_day, expected_month, expected_year;
-	int fine = 0;
-
-	cin >> returned_day >> returned_month >> returned_year;
-	cin >> expected_day>> expected_month >> expected_year;
-
-	cout << "return day : " << returned_day<<endl;
-	cout << "mretur nonth : " << returned_month<<endl;
-	cout << "return  year : " << returned_year<<endl;
-	cout << "expected day : " << expected_day<<endl;
-	cout << "expected nonth : " << expected_month<<endl;
-	cout << "expected  year : " << expected_year<<endl;
-
-	if((returned_year<expected_year) || 
-	((returned_year == expected_year)&&(returned_month<expected_month)))
-//	((returned_year == expectec_year)&&(returned_month==expected_month)&& ( expected_day>returned_day) ) 	
-		fine = 0; 
-	else 
-
-	if (expected_year<returned_year)
-		fine = 10000;
-
-	else if(expected_month<returned_month)
-		fine = 500 *(returned_month - expected_month);
-	else if(expected_day<returned_day) 
-		fine = 15 * ( returned_day-expected_day);
-
-	cout << fine<<endl;
-		
-
-
+	TestWithEmptyArray();
+	TestWithUniqueValues();
+	TestWithExactlyTwoDifferentMinimums();
+	cout << "OK" << endl;
 	return 0;
 }
