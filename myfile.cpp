@@ -1,120 +1,85 @@
-#include <algorithm>
-#include <iostream>
-#include <stdexcept>
-#include <vector>
-#include <cassert>
-#include <set>
-
+#include <bits/stdc++.h>
+#include <queue>
+#include <functional>
 using namespace std;
 
-int minimum_index(vector<int> seq) {
-	if (seq.empty()) {
-		throw invalid_argument("Cannot get the minimum value index from an empty sequence");
-	}
-	int min_idx = 0;
-	for (int i = 1; i < seq.size(); ++i) {
-		if (seq[i] < seq[min_idx]) {
-			min_idx = i;
-
-		}
-	}
-	return min_idx;
-}
+string ltrim(const string &);
+string rtrim(const string &);
+vector<string> split(const string &);
 
 
 
+int main()
+{
+	string N_temp;
+	getline(cin, N_temp);
 
-class TestDataEmptyArray{
+	int N = stoi(ltrim(rtrim(N_temp)));
 	
-public : 
-	//static vector<int> my_array{};
-	static auto get_array(){
+	priority_queue<string, vector<string>, greater<string> > name_book;
 
-		vector <int> my_array{};	
+	for (int N_itr = 0; N_itr < N; N_itr++) {
+		string first_multiple_input_temp;
+		getline(cin, first_multiple_input_temp);
 
-		return my_array;
+		vector<string> first_multiple_input = split(rtrim(first_multiple_input_temp));
+
+		string firstName = first_multiple_input[0];
+
+		string emailID = first_multiple_input[1];
+#if 0
+		cout << "find+last_of : " <<emailID.find("@gmail.com")<<endl;
+		cout << "emailID length : " <<  emailID.length()  << endl;
+		cout << "length of @gmail.com : " << string("@gmail.com").length() << endl;
+#endif
+		if(emailID.find("@gmail.com")==emailID.length()-string("@gmail.com").length())
+			name_book.push(firstName);	
 	}
 
+	while(name_book.size()!=0)	{
 
-
-};
-
-
-class TestDataUniqueValues{
-
-public : 
-	static auto get_expected_result(){
-		int result = 0;
-		return	 result;
+		cout << name_book.top()<<endl;
+		name_book.pop();
 	}
-	static auto get_array(){
-		//int [] my_array = {1,2,3,4,5};
-		vector <int> my_array{1,2,3,4,5};	
-		return my_array;
-	}
-
-};
-
-
-class TestDataExactlyTwoDifferentMinimums{
-
-public :
-
-	static auto get_array(){
-		//int [] my_array = {1,2,3,4,5};
-		vector <int> my_array{1,2,3,1,5};	
-		return my_array;
-	}
-
-
-	static auto get_expected_result()
-	{
-		return 0;
-		
-	}
-
-};
-
-
-void TestWithEmptyArray() {
-	try {
-		auto seq = TestDataEmptyArray::get_array();
-		auto result = minimum_index(seq);
-	} catch (invalid_argument& e) {
-		cout<<"hi I am BC"<<endl;
-		return;
-	}
-	assert(false);
-}
-
-void TestWithUniqueValues() {
-	auto seq = TestDataUniqueValues::get_array();
-	assert(seq.size() >= 2);
-
-	assert(set<int>(seq.begin(), seq.end()).size() == seq.size());
-
-	auto expected_result = TestDataUniqueValues::get_expected_result();
-	auto result = minimum_index(seq);
-	assert(result == expected_result);
-}
-
-void TestWithExactlyTwoDifferentMinimums() {
-	auto seq = TestDataExactlyTwoDifferentMinimums::get_array();
-	assert(seq.size() >= 2);
-
-	auto tmp = seq;
-	sort(tmp.begin(), tmp.end());
-	assert(tmp[0] == tmp[1] and (tmp.size() == 2 or tmp[1] < tmp[2]));
-
-	auto expected_result = TestDataExactlyTwoDifferentMinimums::get_expected_result();
-	auto result = minimum_index(seq);
-	assert(result == expected_result);
-}
-
-int main() {
-	TestWithEmptyArray();
-	TestWithUniqueValues();
-	TestWithExactlyTwoDifferentMinimums();
-	cout << "OK" << endl;
 	return 0;
 }
+
+string ltrim(const string &str) {
+	string s(str);
+
+	s.erase(
+			s.begin(),
+			find_if(s.begin(), s.end(), not1(ptr_fun<int, int>(isspace)))
+	       );
+
+	return s;
+}
+
+string rtrim(const string &str) {
+	string s(str);
+
+	s.erase(
+			find_if(s.rbegin(), s.rend(), not1(ptr_fun<int, int>(isspace))).base(),
+			s.end()
+	       );
+
+	return s;
+}
+
+vector<string> split(const string &str) {
+	vector<string> tokens;
+
+	string::size_type start = 0;
+	string::size_type end = 0;
+
+	while ((end = str.find(" ", start)) != string::npos) {
+		tokens.push_back(str.substr(start, end - start));
+
+		start = end + 1;
+	}
+
+	tokens.push_back(str.substr(start));
+
+	return tokens;
+}
+
