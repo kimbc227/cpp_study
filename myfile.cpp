@@ -1,46 +1,77 @@
 #include <bits/stdc++.h>
-#include <queue>
-#include <functional>
+
 using namespace std;
 
 string ltrim(const string &);
 string rtrim(const string &);
 vector<string> split(const string &);
 
+/*
+ * Complete the 'bitwiseAnd' function below.
+ *
+ * The function is expected to return an INTEGER.
+ * The function accepts following parameters:
+ *  1. INTEGER N
+ *  2. INTEGER K
+ */
+
+int bitwiseAnd(int N, int K) {
+	int result =0;
+	for(int i=0;i<=N-1;i++)
+		for(int j=i+1;j<=N;j++)
+		{
+			int tmp;
+			tmp = i&j;
+			if(tmp < K)
+				if(result<tmp)
+					result =tmp;
+		}
+
+	return result;
+
+}
+
+#define mytest
 
 
 int main()
 {
-	string N_temp;
-	getline(cin, N_temp);
+	ofstream fout("./my_test_result.txt");
 
-	int N = stoi(ltrim(rtrim(N_temp)));
+	string t_temp;
+	getline(cin, t_temp);
+
+	int t = stoi(ltrim(rtrim(t_temp)));
 	
-	priority_queue<string, vector<string>, greater<string> > name_book;
+//	vector<int> result;
 
-	for (int N_itr = 0; N_itr < N; N_itr++) {
+	for (int t_itr = 0; t_itr < t; t_itr++) {
 		string first_multiple_input_temp;
 		getline(cin, first_multiple_input_temp);
 
 		vector<string> first_multiple_input = split(rtrim(first_multiple_input_temp));
 
-		string firstName = first_multiple_input[0];
+		int count = stoi(first_multiple_input[0]);
 
-		string emailID = first_multiple_input[1];
-#if 0
-		cout << "find+last_of : " <<emailID.find("@gmail.com")<<endl;
-		cout << "emailID length : " <<  emailID.length()  << endl;
-		cout << "length of @gmail.com : " << string("@gmail.com").length() << endl;
+		int lim = stoi(first_multiple_input[1]);
+
+		int res = bitwiseAnd(count, lim);
+		
+		fout << res << "\n";
+
+		//result.push_back(res); 
+#ifdef mytest
+		cout<< res << endl;
+
 #endif
-		if(emailID.find("@gmail.com")==emailID.length()-string("@gmail.com").length())
-			name_book.push(firstName);	
 	}
 
-	while(name_book.size()!=0)	{
+/*
+	for(vector<int>::iterator i=result.begin();i!=result.end();i++)
+		cout<<*i<<endl;
+*/
+	fout.close();
 
-		cout << name_book.top()<<endl;
-		name_book.pop();
-	}
 	return 0;
 }
 
