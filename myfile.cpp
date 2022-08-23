@@ -1,33 +1,69 @@
+#if 0
 #include<iostream>
 
 using namespace std;
 
 
-class Integer
-{
-	public:
-		Integer() : mData(0){cout<< "1st case" << endl;}
-		Integer(const Integer& data) : mData(data.mData) { cout << " 2nd case" << endl;}
-		Integer(const int data) : mData(data) { cout << "3rd case" <<endl;}
+class Something {
+	public :
+		int value;
 
-		void printdata()
-		{ cout << "hi : " << mData << endl;}
-		
-		void printdata_test(Integer data)
-		{ data.printdata();}
-	private:
-		int mData;
+
+		Something(int n){
+			value =n;
+			cout << "Constructor"<<endl;
+		}	
+		void setValue(int n) {
+			value = n;
+		}
+
+
+		int getValue() const{
+			return value;
+		}
 
 };
 
 
-int main()
-{
+int main(){
 
-	Integer myInt(3);
-	Integer testInt(myInt);
+	const Something s(3);
+	//	s.setValue(1);
 
-	testInt.printdata();
+	cout << "value = " << s.value << endl;
 
-	
 }
+
+#else
+
+#include<iostream>
+
+using namespace std;
+class Something {
+	public:
+		int value;
+		Something(int n) {
+			value = n;
+			cout << "Constructor" << endl;
+		}
+		void setvalue(int n) {
+			value = n;
+		}
+		int getvalue() const{
+			return value;
+		}
+};
+
+void print(Something s) {
+	cout << s.value << endl;
+	cout << "print함수에서 주소 : " << &s << endl;
+}
+int main() {
+	const Something s(1);
+	print(s);
+	cout << "main함수에서의 주소 : " << &s << endl;
+	return 0;
+}
+
+
+#endif
