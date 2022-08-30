@@ -1,69 +1,22 @@
-#if 0
-#include<iostream>
+#include <iostream>
+
 
 using namespace std;
 
+int& func1(int& a) { return a; } 
+int func2(int b) { return b; }
 
-class Something {
-	public :
-		int value;
-
-
-		Something(int n){
-			value =n;
-			cout << "Constructor"<<endl;
-		}	
-		void setValue(int n) {
-			value = n;
-		}
-
-
-		int getValue() const{
-			return value;
-		}
-
-};
+int main()
+{
+	int a = 3;
+	func1(a) = 4;
+	cout << &func1(a) << endl;
+	cout << a << endl;
+	int b = 2;
+	a = func2(b); // 가능 
+//	func2(b) = 5; // 오류1 
+//	cout << &func2(b) << endl; // 오류 2 }
 
 
-int main(){
-
-	const Something s(3);
-	//	s.setValue(1);
-
-	cout << "value = " << s.value << endl;
 
 }
-
-#else
-
-#include<iostream>
-
-using namespace std;
-class Something {
-	public:
-		int value;
-		Something(int n) {
-			value = n;
-			cout << "Constructor" << endl;
-		}
-		void setvalue(int n) {
-			value = n;
-		}
-		int getvalue() const{
-			return value;
-		}
-};
-
-void print(Something s) {
-	cout << s.value << endl;
-	cout << "print함수에서 주소 : " << &s << endl;
-}
-int main() {
-	const Something s(1);
-	print(s);
-	cout << "main함수에서의 주소 : " << &s << endl;
-	return 0;
-}
-
-
-#endif
