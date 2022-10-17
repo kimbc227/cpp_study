@@ -132,7 +132,23 @@ cout << "data_swap_move() is terminating" << endl;
 
 
 
-int main()
+namespace bc_test
+{
+	void bc_print(){
+		cout << "hi it's bc" << endl;
+
+	}
+	void bc_print2(){
+
+		cout << "hi it's 2nd bc" << endl;
+	}
+
+
+}
+
+
+using namespace bc_test;
+int main2()
 {
 #if 0
 	int a = 0xbc;
@@ -165,4 +181,48 @@ int main()
 	z.Print();
 
 	cout << "----------" << endl;
+
+	bc_print();
+
+}
+
+
+class BC_class
+{
+	public : 
+
+	BC_class():a(7){};
+	int a;
+	int get_a(){
+		return this->a;
+	}
+	int & get_a2(){
+		return this->a;
+	}
+
+};
+
+
+
+int main(){
+
+	BC_class A;
+	cout <<A.get_a()<<endl;		
+	A.get_a2() = 3;
+cout <<A.get_a()<<endl;		
+
+	int b=3;
+	int &c = b;
+	int *d;
+	d = &b;
+
+
+	cout <<b<<endl;		
+
+	cout <<c<<endl;		
+	
+	cout <<*d<<endl;		
+
+
+
 }
